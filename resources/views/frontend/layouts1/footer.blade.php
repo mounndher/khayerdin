@@ -4,9 +4,9 @@
             <div class="row justify-content-between">
                 <div class="col-md-6 col-xl-auto">
                     <div class="widget footer-widget">
-                        <h3 class="widget_title">Contact Us</h3>
+                        <h3 class="widget_title">Contactez-nous</h3>
                         <div class="th-widget-contact">
-                            <p class="footer-text">Keep up to date with our latest news & special offer.</p>
+                            <p class="footer-text">Restez informé de nos dernières actualités et offres spéciales.</p>
                             <p class="footer-info">
                                 <i class="fal fa-location-dot"></i>
                                 2478 Street City Ohio 90255
@@ -30,16 +30,16 @@
                 </div>
                 <div class="col-md-6 col-xl-auto">
                     <div class="widget widget_nav_menu footer-widget">
-                        <h3 class="widget_title">Quick Links</h3>
+                        <h3 class="widget_title">Liens rapides</h3>
                         <div class="menu-all-pages-container">
                             <ul class="menu">
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="about.html">Terms of Use</a></li>
-                                <li><a href="service.html">Our Services</a></li>
+                                <li><a href="{{ route('about') }}">À propos de nous</a></li>
+                                <li><a href="">Conditions d'utilisation</a></li>
+                                
                                 <li><a href="faq.html">Help & FAQs</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="about.html">Privacy policy</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                              
+                                <li><a href="">Privacy policy</a></li>
+                                <li><a href="{{ route('contect') }}">Contactez-nous</a></li>
                             </ul>
                         </div>
                     </div>

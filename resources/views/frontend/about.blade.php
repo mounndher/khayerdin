@@ -1,12 +1,12 @@
 @extends('frontend.layouts1.master')
 @section('content')
-<div class="breadcumb-wrapper " data-bg-src="assets/img/bg/breadcumb-bg.jpg">
+<div class="breadcumb-wrapper " data-bg-src="{{ asset('frontend1/assets/img/bg/breadcumb-bg.jpg') }}">
     <div class="container">
         <div class="breadcumb-content">
-            <h1 class="breadcumb-title">About Us</h1>
+            <h1 class="breadcumb-title">À propos de nous</h1>
             <ul class="breadcumb-menu">
-                <li><a href="home-medical-clinic.html">Home</a></li>
-                <li>About Us</li>
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li>À propos de nous</li>
             </ul>
         </div>
     </div>

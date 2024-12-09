@@ -1,13 +1,17 @@
+@php
+    $generalSetting = \App\Models\GeneralSetting::first();
+    $seoSetting = \App\Models\SeoSetting::first();
+@endphp
 <!doctype html>
 <html class="no-js" lang="zxx">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Mediax - Health & Medical HTML Template - Medical Shop</title>
+    <title>{{@$seoSetting->title}}</title>
     <meta name="author" content="Mediax">
-    <meta name="description" content="Mediax - Health & Medical HTML Template">
-    <meta name="keywords" content="Mediax - Health & Medical HTML Template">
+    <meta name="description" content="{{@$seoSetting->description}}">
+    <meta name="keywords" content="{{@$seoSetting->keywords}}">
     <meta name="robots" content="INDEX,FOLLOW">
 
     <!-- Mobile Specific Metas -->
@@ -29,7 +33,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('frontend1/assets/img/favicons/favicon-16x16.png') }}">
     <link rel="manifest" href="assets/img/favicons/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{ asset('frontend1/assets/img/favicons/ms-icon-144x144.png') }}">
+    <meta name="msapplication-TileImage" content="{{asset($generalSetting->favicon)}}">
     <meta name="theme-color" content="#ffffff">
 
     <!--==============================
@@ -227,74 +231,25 @@
     </div>
     <div class="popup-search-box d-none d-lg-block">
         <button class="searchClose"><i class="fal fa-times"></i></button>
-        <form action="#">
-            <input type="text" placeholder="What are you looking for?">
+        <form action="{{ route('frontend.shop') }}" method="GET">
+            <input 
+                type="text" 
+                name="search" 
+                value="{{ request('search') }}" 
+                placeholder="What are you looking for?">
             <button type="submit"><i class="fal fa-search"></i></button>
         </form>
-    </div><!--==============================
+        
+        
+    </div>
+    
+    
+    
+    
+    <!--==============================
     Mobile Menu
   ============================== -->
-    <div class="th-menu-wrapper">
-        <div class="th-menu-area text-center">
-            <button class="th-menu-toggle"><i class="fal fa-times"></i></button>
-            <div class="mobile-logo">
-                <a href="home-medical-clinic.html"><img src="{{ asset('frontend1/assets/img/logo.svg') }}" alt="Mediax"></a>
-            </div>
-            <div class="th-mobile-menu">
-                <ul>
-                    <li class="menu-item-has-children">
-                        <a href="home-medical-clinic.html">Home</a>
-                        <ul class="sub-menu">
-                            <li><a href="home-medical-clinic.html">Medical Clinic</a></li>
-                            <li><a href="home-dental-care.html">Dental Care</a></li>
-                            <li><a href="home-medical-shop.html">Medical Shop</a></li>
-
-
-                        </ul>
-                    </li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li class="menu-item-has-children">
-                        <a href="#">Service</a>
-                        <ul class="sub-menu">
-                            <li><a href="service.html">Service</a></li>
-                            <li><a href="service-details.html">Service Details</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children">
-                        <a href="#">Pages</a>
-                        <ul class="sub-menu">
-                            <li class="menu-item-has-children">
-                                <a href="#">Shop</a>
-                                <ul class="sub-menu">
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                    <li><a href="cart.html">Cart Page</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="team.html">Team</a></li>
-                            <li><a href="team-details.html">Team Details</a></li>
-                            <li><a href="appointment.html">Appointments</a></li>
-                            <li><a href="faq.html">Faq Page</a></li>
-                            <li><a href="pricing.html">Pricing Plan</a></li>
-                            <li><a href="error.html">Error Page</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children">
-                        <a href="#">Blog</a>
-                        <ul class="sub-menu">
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="blog-details.html">Blog Details</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div><!--==============================
+    <!--==============================
 	Header Area
 ==============================-->
     @include('frontend.layouts1.header')

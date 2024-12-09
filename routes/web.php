@@ -48,8 +48,11 @@ use App\Http\Controllers\Admin\CityController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contect', [HomeController::class, 'Contect'])->name('contect');
+Route::post('/contect', [HomeController::class, 'Contectstor'])->name('contect.store');
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
 Route::get('add-cart/{productId}', [CartController::class, 'addCart'])->name('add.cart');
+Route::post('add-cart/{productId}', [CartController::class, 'addCartPro'])->name('add.cartproduct');
+
 
 // Add this route to handle the quantity update via Ajax
 Route::post('cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update.quantity');
@@ -65,11 +68,17 @@ Route::get('clear', [CartController::class, 'clearCart'])->name('clear');
 
 
 // Handle the form submission
-Route::post('/contect', [HomeController::class, 'Contectstor'])->name('contect.store');
+
 Route::get('/about', [HomeController::class, 'About'])->name('about');
-Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
+
+
+Route::get('/shop', [HomeController::class, 'shop'])->name('frontend.shop');
+
+
+Route::get('/shop/category/{category}', [HomeController::class, 'shop'])->name('shop.category');
+
 Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
-Route::get('add-to-cart/{product_id}', [HomeController::class, 'Addtocart'])->name('add-to-cart');
+
 Route::get('blog-details/{id}', [HomeController::class, 'showBlog'])->name('show.blog');
 Route::get('blogs', [HomeController::class, 'blog'])->name('blog');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');

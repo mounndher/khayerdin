@@ -15,7 +15,7 @@ class ContactSectionSettingController extends Controller
      */
     public function index()
     {
-        $contactTitle = ContactSectionSetting::first();
+        $contactTitle = ContactSectionSetting::all();
        return view('admin.contact-setting.index', compact('contactTitle'));
     }
 

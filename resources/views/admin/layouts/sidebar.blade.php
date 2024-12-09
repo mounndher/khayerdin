@@ -22,22 +22,9 @@
             
             
                 
-            <li class="nav-item dropdown 
-           ">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
-                    <span>
-                        Propriétés </span></a>
-                <ul class="dropdown-menu" style="display: none;">
-                    
-                  
-                    <li class=""><a class="nav-link" href="{{ route('admin.listings.index') }}">
-                        prdouct</a></li>
-                   
-                
-                </ul>
-            </li>
+            
 
-           
+            <li class=""><a class="nav-link" href="{{route('admin.contact-section-setting.index')}}"><i class="far fa-square"></i> <span>contact</span></a></li>
             <li class="{{setSidebarActive(['admin.listings.*'])}}"><a class="nav-link" href="{{route('admin.listings.index')}}"><i class="far fa-square"></i> <span>Produit</span></a></li>
             <li class="{{setSidebarActive(['admin.category.*'])}}"><a class="nav-link" href="{{route('admin.category.index')}}"><i class="far fa-square"></i> <span>Category</span></a></li>
 
@@ -49,7 +36,7 @@
                             href="{{ route('admin.contact-section-setting.index') }}">Section Setting</a></li>
                 </ul>
             </li>
-            <li class="{{setSidebarActive(['admin.about.*'])}}"><a class="nav-link" href="{{route('admin.about.index')}}"><i class="far fa-square"></i> <span>About</span></a></li>
+           
 
 
            

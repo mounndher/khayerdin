@@ -47,9 +47,33 @@ class CartController extends Controller
            
         ]);
 
-        return redirect()->route('cart')->with('success', 'Item has been added to the cart');
+        return redirect()->route('cart')->with('success', "L'article a été ajouté au panier");
     }
-
+    public function addCartPro(Request $request, $productId)
+    {
+        // Validate the quantity (optional but recommended)
+        $request->validate([
+            'quantity' => 'required|integer|min:1|max:100',
+        ]);
+    
+        // Find the product by ID
+        $product = Listing::findOrFail($productId);
+    
+        // Add the product to the cart with the specified quantity
+        Cart::add([
+            'id' => $productId,
+            'name' => $product->title,
+            'price' => $product->price,
+            'qty' => $request->quantity, // Use the quantity from the form
+            'weight' => 1,
+            'options' => [
+                'image' => $product->images,
+            ],
+        ]);
+    
+        return redirect()->route('cart')->with('success', "The product has been added to your cart.");
+    }
+    
     public function updateQuantity(Request $request)
     {
         $cartItemId = $request->input('rowId');
@@ -95,7 +119,7 @@ class CartController extends Controller
         // Remove the item from the cart by its product ID
         Cart::remove($productId);
 
-        return back()->with('success', 'Item has been removed from the cart');
+        return back()->with('success', "L'article a été retiré du panier");
     }
 
     public function clearCart()
@@ -103,6 +127,6 @@ class CartController extends Controller
         // Clear all items in the cart
         Cart::clear();
 
-        return back()->with('success', 'There is no item in your cart');
+        return back()->with('success', "Il n'y a aucun article dans votre panier");
     }
 }

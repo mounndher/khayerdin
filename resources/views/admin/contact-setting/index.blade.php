@@ -1,76 +1,62 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-<section class="section">
-    <div class="section-header">
-      <div class="section-header-back">
-        <a href="features-posts.html" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
-      </div>
-      <h1>Contact Section Setting</h1>
+    <section class="section">
+        <div class="section-header">
+            <h1>all Contact</h1>
+        </div>
 
-    </div>
-
-    <div class="section-body">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
+        <div class="card card-primary">
             <div class="card-header">
-              <h4>Update Section</h4>
+                <h4>Contact</h4>
+                
             </div>
             <div class="card-body">
-                <form action="{{route('admin.contact-section-setting.update',1)}}" method="POST"
-                 enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <div class="form-group row mb-4">
-                      <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
-                      <div class="col-sm-12 col-md-7">
-                        <div id="image-preview" class="image-preview">
-                          <label for="image-upload" id="image-label">Choose File</label>
-                          <input type="file" name="image" id="image-upload" />
-                        </div>
-                      </div>
-                  </div>
-                    <div class="form-group row mb-4">
-                      <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
-                      <div class="col-sm-12 col-md-7">
-                        <input type="text" name="title" class="form-control" value="{{$contactTitle->title}}">
-                      </div>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table-1">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>phone</th>
+                                <th>subject</th>
+                                <th>Message</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($contactTitle as $index => $service)
+                                <tr>
+                              
+                                   
+                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    
+                                    <td>{{ $service->name }}</td>
+                                    <td>{{ $service->email }}</td>
+                                    <td>{{ $service->number }}</td>
+                                    <td>{{ $service->subject }}</td>
+                                    <td>{{ $service->message }}</td>
+                                    
+                                    
+                                </tr>
+                            @endforeach
 
-                    <div class="form-group row mb-4">
-                      <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Sub Title</label>
-                      <div class="col-sm-12 col-md-7">
-                        <textarea name="sub_title" id="" class="form-control" style="height: 100px">{{$contactTitle->sub_title}}</textarea>
-                      </div>
-                    </div>
-
-
-                    <div class="form-group row mb-4">
-                      <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                      <div class="col-sm-12 col-md-7">
-                        <button class="btn btn-primary">Update</button>
-                      </div>
-                    </div>
-                </form>
-
-
-
+                        </tbody>
+                    </table>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 @endsection
+
 @push('scripts')
-  <script>
-    $(document).ready(function(){
-        $('#image-preview').css({
-            'background-image': 'url("{{asset($contactTitle->image)}}")',
-            'background-size': 'cover',
-            'background-position': 'center center'
-        })
-    });
-  </script>
+    <script>
+        $("#table-1").dataTable({
+            "columnDefs": [{
+                "sortable": false,
+                "targets": [2, 3]
+            }]
+        });
+    </script>
 @endpush

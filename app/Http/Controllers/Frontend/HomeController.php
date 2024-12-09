@@ -18,9 +18,9 @@ use App\Models\SkillSectionSetting;
 use App\Models\ServiceInfo;
 use App\Http\Controllers\Controller;
 use App\Models\Listing;
-use Darryldecode\Cart\Facades\CartFacade as Cart;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use Gloudemans\Shoppingcart\Facades\Cart;
 class HomeController extends Controller
 {
     //
@@ -29,14 +29,19 @@ class HomeController extends Controller
         $hero = Hero::first();
         $typerTitles = ServiceInfo::first();
         $services = Service::all();
-        $about = About::first();
+       
         $products = Listing::where('published', 1)->take(8)->get();
         $categoriess = Category::with('children')->whereNull('parent_id')->get();
         $categories = Category::where('home', 1)
         ->where('status', 1)
         ->get();
     
-        
+        $productsBest = Listing::where('published', 1)
+              ->where('best',1)
+              ->take(4)->get();
+        $productsRate = Listing::where('published', 1)
+              ->where('rate',1)
+              ->take(4)->get();
         return view('frontend.home1',
             compact(
                 'hero',
@@ -44,7 +49,8 @@ class HomeController extends Controller
                 'services',
                 'products',
                 'categories',
-                'categoriess'
+                'categoriess',
+                'productsBest','productsRate',
                
             ));
     }
@@ -61,26 +67,59 @@ class HomeController extends Controller
         ));
 
     }
-    public function shop(){
-        $products = Listing::where('published', 1)->take(12)->get();
-        $categoriess = Category::with('children')->whereNull('parent_id')->get();
-        return view('frontend.shop',
-        compact(
-            
-            'products','categoriess'
-            
-           
-        ));
-    }
-    public function productDetail($id)
-{
-    $productprof = Listing::where('id', $id)->first(); // Fetch the product
-
    
 
+
+    public function shop(Request $request)
+{
+    $query = Listing::query();
+
+    // Filter by category if specified
+    if ($request->has('category') && !empty($request->category)) {
+        $query->where('category_id', $request->category);
+    }
+
+    // Filter by subcategory if specified
+    if ($request->has('subcategory') && !empty($request->subcategory)) {
+        $query->where('subcategory_id', $request->subcategory);
+    }
+
+    // Filter by childcategory if specified
+    if ($request->has('childcategory') && !empty($request->childcategory)) {
+        $query->where('childcategory_id', $request->childcategory);
+    }
+
+    // Check if a search term is provided
+    if ($request->has('search') && !empty($request->search)) {
+        $search = $request->search;
+        $query->where('title', 'like', '%' . $search . '%') // Search by product title
+              ->orWhere('description', 'like', '%' . $search . '%'); // Optionally search by description
+    }
+
+    // Paginate the results
+    $products = $query->paginate(12);
+
+    // Retrieve categories with children for the sidebar or navigation menu
     $categoriess = Category::with('children')->whereNull('parent_id')->get();
 
-    return view('frontend.product', compact('categoriess', 'productprof'));
+    // Return the view with the products and categories
+    return view('frontend.shop', compact('products', 'categoriess'));
+}
+
+    
+
+    public function productDetail($id)
+{
+    $product = Listing::with(['category'])->findOrFail($id);
+
+    // Fetch related products based on the same category (excluding the current product)
+    $relatedProducts = Listing::where('category_id', $product->category_id)
+                                ->where('id', '!=', $id)
+                                ->take(4) // Limit the number of related products
+                                ->get();
+    $categoriess = Category::with('children')->whereNull('parent_id')->get();
+    return view('frontend.product', 
+    compact('categoriess', 'product', 'relatedProducts'));
 }
 public function Contect()
 {
@@ -96,11 +135,14 @@ public function Contectstor(Request $request){
         'message' => 'required|string|max:500',
     ]);
 
-    // Store or process the data (e.g., save to database, send email, etc.)
-    // For example:
-    // Contact::create($validated); // Assuming you have a Contact model
+    $contact = new ContactSectionSetting();
+    $contact->name=$request->name;
+    $contact->email=$request->email;
+    $contact->number=$request->number;
+    $contact->subject=$request->subject;
+    $contact->message=$request->message;
+    $contact->save();
 
-    // Return a response or redirect
     return redirect()->route('contect')->with('success', 'Your message has been sent successfully!');
 }
 public function About()
@@ -108,7 +150,12 @@ public function About()
     $categoriess = Category::with('children')->whereNull('parent_id')->get();
     return view('frontend.About',compact('categoriess' ));
 }
-
+public function  CategoryListing($id, $slug){
+        $listing = Listing::where('category_id',$id)->where('status','1')->get();
+        $category = Category::where('id',$id)->first();
+        $categories = Category::latest()->get();
+     view('frontend.home1',compact('listing','category','categories'));
+}
 
 
 

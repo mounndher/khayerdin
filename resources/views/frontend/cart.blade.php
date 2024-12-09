@@ -4,10 +4,10 @@
 <div class="breadcumb-wrapper " data-bg-src="assets/img/bg/breadcumb-bg.jpg">
     <div class="container">
         <div class="breadcumb-content">
-            <h1 class="breadcumb-title">Cart Page</h1>
+            <h1 class="breadcumb-title">Page du panier</h1>
             <ul class="breadcumb-menu">
                 <li><a href="{{ route('home') }}">Home</a></li>
-                <li>Cart Page</li>
+                <li>Page du panier</li>
             </ul>
         </div>
     </div>
@@ -19,11 +19,11 @@
             <div class="cart-wrapper">
                 <div class="cart-header">
                     <div class="cart-col cart-col-image">Image</div>
-                    <div class="cart-col cart-col-productname">Product Name</div>
-                    <div class="cart-col cart-col-price">Price</div>
-                    <div class="cart-col cart-col-quantity">Quantity</div>
+                    <div class="cart-col cart-col-productname">Nom du produit</div>
+                    <div class="cart-col cart-col-price">Prix</div>
+                    <div class="cart-col cart-col-quantity">Quantité</div>
                     <div class="cart-col cart-col-total">Total</div>
-                    <div class="cart-col cart-col-remove">Remove</div>
+                    <div class="cart-col cart-col-remove">Retirer</div>
                 </div>
 
                 @foreach (Cart::content() as $item)
@@ -53,19 +53,19 @@
 
         <div class="row justify-content-end">
             <div class="col-md-8 col-lg-7 col-xl-6">
-                <h2 class="h4 summary-title">Cart Totals</h2>
+                <h2 class="h4 summary-title">Totaux du panier</h2>
                 <table class="cart_totals">
                     <tbody>
                         <tr>
-                            <td>Order Total</td>
+                            <td>Total de la commande</td>
                             <td>
-                                <span class="amount"><bdi><span>$</span><span id="cart-subtotal">{{ Cart::subtotal() }}</span></bdi></span>
+                                <span class="amount"><bdi>$<span id="cart-subtotal">{{ Cart::subtotal() }}</span></bdi></span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="wc-proceed-to-checkout mb-30">
-                    <a href="{{ route('checkout') }}" class="th-btn">Proceed to checkout</a>
+                    <a href="#" class="th-btn">Passer à la caisse</a>
                 </div>
             </div>
         </div>
